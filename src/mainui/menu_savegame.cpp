@@ -333,9 +333,10 @@ static void UI_SaveGame_Init( void )
 	uiSaveGame.background.generic.flags = QMF_INACTIVE;
 	uiSaveGame.background.generic.x = 0;
 	uiSaveGame.background.generic.y = 0;
-	uiSaveGame.background.generic.width = 1024;
-	uiSaveGame.background.generic.height = 768;
+	uiSaveGame.background.generic.width = ScreenWidth;
+	uiSaveGame.background.generic.height = ScreenHeight;
 	uiSaveGame.background.pic = ART_BACKGROUND;
+	uiSaveGame.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiSaveGame.banner.generic.id = ID_BANNER;
 	uiSaveGame.banner.generic.type = QMTYPE_BITMAP;

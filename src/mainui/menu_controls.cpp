@@ -456,9 +456,10 @@ static void UI_Controls_Init( void )
 	uiControls.background.generic.flags = QMF_INACTIVE;
 	uiControls.background.generic.x = 0;
 	uiControls.background.generic.y = 0;
-	uiControls.background.generic.width = 1024;
-	uiControls.background.generic.height = 768;
+	uiControls.background.generic.width = ScreenWidth;
+	uiControls.background.generic.height = ScreenHeight;
 	uiControls.background.pic = ART_BACKGROUND;
+	uiControls.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiControls.banner.generic.id = ID_BANNER;
 	uiControls.banner.generic.type = QMTYPE_BITMAP;

@@ -247,9 +247,10 @@ static void UI_CustomGame_Init( void )
 	uiCustomGame.background.generic.flags = QMF_INACTIVE;
 	uiCustomGame.background.generic.x = 0;
 	uiCustomGame.background.generic.y = 0;
-	uiCustomGame.background.generic.width = 1024;
-	uiCustomGame.background.generic.height = 768;
+	uiCustomGame.background.generic.width = ScreenWidth;
+	uiCustomGame.background.generic.height = ScreenHeight;
 	uiCustomGame.background.pic = ART_BACKGROUND;
+	uiCustomGame.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiCustomGame.banner.generic.id = ID_BANNER;
 	uiCustomGame.banner.generic.type = QMTYPE_BITMAP;

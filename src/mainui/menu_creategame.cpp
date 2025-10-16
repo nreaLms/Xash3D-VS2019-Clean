@@ -280,9 +280,10 @@ static void UI_CreateGame_Init( void )
 	uiCreateGame.background.generic.flags = QMF_INACTIVE;
 	uiCreateGame.background.generic.x = 0;
 	uiCreateGame.background.generic.y = 0;
-	uiCreateGame.background.generic.width = 1024;
-	uiCreateGame.background.generic.height = 768;
+	uiCreateGame.background.generic.width = ScreenWidth;
+	uiCreateGame.background.generic.height = ScreenHeight;
 	uiCreateGame.background.pic = ART_BACKGROUND;
+	uiCreateGame.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiCreateGame.banner.generic.id = ID_BANNER;
 	uiCreateGame.banner.generic.type = QMTYPE_BITMAP;

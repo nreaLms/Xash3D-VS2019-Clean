@@ -99,9 +99,10 @@ static void UI_SaveLoad_Init( void )
 	uiSaveLoad.background.generic.flags = QMF_INACTIVE;
 	uiSaveLoad.background.generic.x = 0;
 	uiSaveLoad.background.generic.y = 0;
-	uiSaveLoad.background.generic.width = 1024;
-	uiSaveLoad.background.generic.height = 768;
+	uiSaveLoad.background.generic.width = ScreenWidth;
+	uiSaveLoad.background.generic.height = ScreenHeight;
 	uiSaveLoad.background.pic = ART_BACKGROUND;
+	uiSaveLoad.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiSaveLoad.banner.generic.id = ID_BANNER;
 	uiSaveLoad.banner.generic.type = QMTYPE_BITMAP;

@@ -82,10 +82,10 @@ Any parameter can be NULL if you don't want it
 */
 void UI_ScaleCoords( int *x, int *y, int *w, int *h )
 {
-	if( x ) *x *= uiStatic.scaleX;
-	if( y ) *y *= uiStatic.scaleY;
-	if( w ) *w *= uiStatic.scaleX;
-	if( h ) *h *= uiStatic.scaleY;
+	if ( x ) *x = int( *x * uiStatic.scaleX + uiStatic.offsetX );
+	if ( y ) *y = int( *y * uiStatic.scaleY + uiStatic.offsetY );
+	if ( w ) *w = int( *w * uiStatic.scaleX );
+	if ( h ) *h = int( *h * uiStatic.scaleY );
 }
 
 /*
@@ -1522,21 +1522,29 @@ UI_VidInit
 */
 int UI_VidInit( void )
 {
-	UI_Precache ();
-		
-	uiStatic.scaleX = ScreenWidth / 1024.0f;
-	uiStatic.scaleY = ScreenHeight / 768.0f;
+	UI_Precache();
 
-	// move cursor to screen center
+	// --- Aspect ratio compensation ---
+	float scaleX = ScreenWidth / 1024.0f;
+	float scaleY = ScreenHeight / 768.0f;
+	float scale = ( scaleX < scaleY ) ? scaleX : scaleY; // uniform scale
+
+	uiStatic.scaleX = scale;
+	uiStatic.scaleY = scale;
+
+	// Calculate offset to center menu
+	uiStatic.offsetX = ( ScreenWidth - 1024 * scale ) / 2;
+	uiStatic.offsetY = ( ScreenHeight - 768 * scale ) / 2;
+	// ----------------------------------
+
 	uiStatic.cursorX = ScreenWidth >> 1;
 	uiStatic.cursorY = ScreenHeight >> 1;
 	uiStatic.outlineWidth = 4;
 	uiStatic.sliderWidth = 6;
 
-	// all menu buttons have the same view sizes
+	// Scale button dimensions
 	uiStatic.buttons_draw_width = UI_BUTTONS_WIDTH;
 	uiStatic.buttons_draw_height = UI_BUTTONS_HEIGHT;
-
 	UI_ScaleCoords( NULL, NULL, &uiStatic.outlineWidth, NULL );
 	UI_ScaleCoords( NULL, NULL, &uiStatic.sliderWidth, NULL );
 	UI_ScaleCoords( NULL, NULL, &uiStatic.buttons_draw_width, &uiStatic.buttons_draw_height );

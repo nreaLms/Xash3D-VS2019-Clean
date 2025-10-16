@@ -175,9 +175,10 @@ static void UI_VidOptions_Init( void )
 	uiVidOptions.background.generic.flags = QMF_INACTIVE;
 	uiVidOptions.background.generic.x = 0;
 	uiVidOptions.background.generic.y = 0;
-	uiVidOptions.background.generic.width = 1024;
-	uiVidOptions.background.generic.height = 768;
+	uiVidOptions.background.generic.width = ScreenWidth;
+	uiVidOptions.background.generic.height = ScreenHeight;
 	uiVidOptions.background.pic = ART_BACKGROUND;
+	uiVidOptions.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiVidOptions.banner.generic.id = ID_BANNER;
 	uiVidOptions.banner.generic.type = QMTYPE_BITMAP;

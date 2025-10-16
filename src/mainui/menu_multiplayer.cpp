@@ -103,9 +103,10 @@ static void UI_MultiPlayer_Init( void )
 	uiMultiPlayer.background.generic.flags = QMF_INACTIVE;
 	uiMultiPlayer.background.generic.x = 0;
 	uiMultiPlayer.background.generic.y = 0;
-	uiMultiPlayer.background.generic.width = 1024;
-	uiMultiPlayer.background.generic.height = 768;
+	uiMultiPlayer.background.generic.width = ScreenWidth;
+	uiMultiPlayer.background.generic.height = ScreenHeight;
 	uiMultiPlayer.background.pic = ART_BACKGROUND;
+	uiMultiPlayer.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiMultiPlayer.banner.generic.id = ID_BANNER;
 	uiMultiPlayer.banner.generic.type = QMTYPE_BITMAP;

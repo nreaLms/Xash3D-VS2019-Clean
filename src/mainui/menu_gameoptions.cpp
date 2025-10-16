@@ -179,9 +179,10 @@ static void UI_GameOptions_Init( void )
 	uiGameOptions.background.generic.flags = QMF_INACTIVE;
 	uiGameOptions.background.generic.x = 0;
 	uiGameOptions.background.generic.y = 0;
-	uiGameOptions.background.generic.width = 1024;
-	uiGameOptions.background.generic.height = 768;
+	uiGameOptions.background.generic.width = ScreenWidth;
+	uiGameOptions.background.generic.height = ScreenHeight;
 	uiGameOptions.background.pic = ART_BACKGROUND;
+	uiGameOptions.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiGameOptions.banner.generic.id = ID_BANNER;
 	uiGameOptions.banner.generic.type = QMTYPE_BITMAP;

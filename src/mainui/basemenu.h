@@ -40,6 +40,7 @@ GNU General Public License for more details.
 #include "netadr.h"
 
 #define ART_BACKGROUND		"gfx/shell/splash"
+#define ART_BACKGROUND_WIDE	"gfx/shell/splash_wide"
 #define UI_SLIDER_MAIN		"gfx/shell/slider"
 #define UI_LEFTARROW		"gfx/shell/larrowdefault"
 #define UI_LEFTARROWFOCUS		"gfx/shell/larrowflyover"
@@ -319,6 +320,8 @@ void UI_PicButton_Init( menuPicButton_s *b );
 const char *UI_PicButton_Key( menuPicButton_s *b, int key, int down );
 void UI_PicButton_Draw( menuPicButton_s *item );
 
+void UI_Background_Ownerdraw( void *self );
+
 // =====================================================================
 // Main menu interface
 
@@ -366,6 +369,8 @@ typedef struct
 	int		outlineWidth;
 	int		sliderWidth;
 
+	float	offsetX;
+	float	offsetY;
 	int		cursorX;
 	int		cursorY;
 	int		realTime;

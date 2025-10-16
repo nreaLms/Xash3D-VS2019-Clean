@@ -165,8 +165,10 @@ static void UI_Audio_Callback( void *self, int event )
 
 static void UI_Audio_Ownerdraw(void* self)
 {
-	if (CVAR_GET_FLOAT("cl_background") != 1)
-		UI_DrawPic(((menuBitmap_s*)self)->generic.x, ((menuBitmap_s*)self)->generic.y, ((menuBitmap_s*)self)->generic.width, ((menuBitmap_s*)self)->generic.height, uiColorWhite, ((menuBitmap_s*)self)->pic);
+	//if (CVAR_GET_FLOAT("cl_background") != 1)
+	//	UI_DrawPic(((menuBitmap_s*)self)->generic.x, ((menuBitmap_s*)self)->generic.y, ((menuBitmap_s*)self)->generic.width, ((menuBitmap_s*)self)->generic.height, uiColorWhite, ((menuBitmap_s*)self)->pic);
+
+	UI_Background_Ownerdraw( self );
 
 	DrawBoldString(320 * uiStatic.scaleX, 440 * uiStatic.scaleY,
 		"Sound interpolation:");
@@ -188,10 +190,10 @@ static void UI_Audio_Init( void )
 	uiAudio.background.generic.flags = QMF_INACTIVE;
 	uiAudio.background.generic.x = 0;
 	uiAudio.background.generic.y = 0;
-	uiAudio.background.generic.width = 1024;
-	uiAudio.background.generic.height = 768;
+	uiAudio.background.generic.width = ScreenWidth;
+	uiAudio.background.generic.height = ScreenHeight;
 	uiAudio.background.pic = ART_BACKGROUND;
-	uiAudio.background.generic.ownerdraw = UI_Audio_Ownerdraw;
+	uiAudio.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiAudio.banner.generic.id = ID_BANNER;
 	uiAudio.banner.generic.type = QMTYPE_BITMAP;

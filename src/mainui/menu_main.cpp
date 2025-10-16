@@ -96,7 +96,7 @@ static void UI_MsgBox_Ownerdraw( void *self )
 UI_Background_Ownerdraw
 =================
 */
-static void UI_Background_Ownerdraw( void *self )
+void UI_Background_Ownerdraw( void *self )
 {
 	menuCommon_s	*item = (menuCommon_s *)self;
 
@@ -104,25 +104,33 @@ static void UI_Background_Ownerdraw( void *self )
 	if( CVAR_GET_FLOAT( "cl_background" ))
 		return;
 
-	UI_DrawBackground_Callback( self );
+	// Determine aspect ratio
+	float aspect = ( float ) ScreenWidth / ( float ) ScreenHeight;
+	const char *background = ART_BACKGROUND; // default
 
-	if (uiStatic.m_fHaveSteamBackground || uiStatic.m_fDisableLogo)
-		return; // no logos for steam background
+	if ( aspect >= 1.7f )  // roughly 16:9 or wider
+		background = ART_BACKGROUND_WIDE;
 
-	if( GetLogoLength() <= 0.05f || GetLogoWidth() <= 32 )
-		return;	// don't draw stub logo (GoldSrc rules)
+	// Draw the background stretched to full screen
+	UI_DrawPic( 0, 0, ScreenWidth, ScreenHeight, 0xFFFFFF, background );
 
-	float	logoWidth, logoHeight, logoPosY;
-	float	scaleX, scaleY;
+	// Logo handling
+	if ( uiStatic.m_fHaveSteamBackground || uiStatic.m_fDisableLogo )
+		return;
 
-	scaleX = ScreenWidth / 640.0f;
-	scaleY = ScreenHeight / 480.0f;
+	if ( GetLogoLength() <= 0.05f || GetLogoWidth() <= 32 )
+		return;
 
-	logoWidth = GetLogoWidth() * scaleX;
-	logoHeight = GetLogoHeight() * scaleY;
-	logoPosY = 70 * scaleY;	// 70 it's empirically determined value (magic number)
+	// Scale logo proportionally
+	float scaleX = ScreenWidth / 640.0f;
+	float scaleY = ScreenHeight / 480.0f;
 
-	DRAW_LOGO( "logo.avi", 0, logoPosY, logoWidth, logoHeight );
+	float logoWidth = GetLogoWidth() * scaleX;
+	float logoHeight = GetLogoHeight() * scaleY;
+	float logoPosX = 0;           // adjust if you want centered
+	float logoPosY = 70 * scaleY; // original magic number
+
+	DRAW_LOGO( "logo.avi", logoPosX, logoPosY, logoWidth, logoHeight );
 }
 
 static void UI_QuitDialog( void )
@@ -347,8 +355,8 @@ static void UI_Main_Init( void )
 	uiMain.background.generic.flags = QMF_INACTIVE;
 	uiMain.background.generic.x = 0;
 	uiMain.background.generic.y = 0;
-	uiMain.background.generic.width = 1024;
-	uiMain.background.generic.height = 768;
+	uiMain.background.generic.width = ScreenWidth;
+	uiMain.background.generic.height = ScreenHeight;
 	uiMain.background.pic = ART_BACKGROUND;
 	uiMain.background.generic.ownerdraw = UI_Background_Ownerdraw;
 

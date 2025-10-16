@@ -196,9 +196,10 @@ static void UI_AdvControls_Init( void )
 	uiAdvControls.background.generic.flags = QMF_INACTIVE;
 	uiAdvControls.background.generic.x = 0;
 	uiAdvControls.background.generic.y = 0;
-	uiAdvControls.background.generic.width = 1024;
-	uiAdvControls.background.generic.height = 768;
+	uiAdvControls.background.generic.width = ScreenWidth;
+	uiAdvControls.background.generic.height = ScreenHeight;
 	uiAdvControls.background.pic = ART_BACKGROUND;
+	uiAdvControls.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiAdvControls.banner.generic.id = ID_BANNER;
 	uiAdvControls.banner.generic.type = QMTYPE_BITMAP;

@@ -2214,11 +2214,29 @@ void UI_PicButton_Draw( menuPicButton_s *item )
 		{ 0, uiStatic.buttons_width, 52, 78 }
 		};
 
-		PIC_Set( item->pic, r, g, b, 255 );
 		PIC_EnableScissor( item->generic.x, item->generic.y, uiStatic.buttons_draw_width, uiStatic.buttons_draw_height - 2 );
-		PIC_DrawAdditive( item->generic.x, item->generic.y, uiStatic.buttons_draw_width, uiStatic.buttons_draw_height, &rects[state] );
 
-		a = (512 - (uiStatic.realTime - item->generic.lastFocusTime)) >> 1;
+		if ( state == BUTTON_FOCUS )
+		{
+			// draw idle frame faintly under the focus highlight
+			PIC_Set( item->pic, r, g, b, 255 );
+			PIC_DrawAdditive( item->generic.x, item->generic.y,
+				uiStatic.buttons_draw_width, uiStatic.buttons_draw_height, &rects[ BUTTON_NOFOCUS ] );
+
+			// draw focus frame with reduced alpha
+			PIC_Set( item->pic, r, g, b, 180 );
+			PIC_DrawAdditive( item->generic.x, item->generic.y,
+				uiStatic.buttons_draw_width, uiStatic.buttons_draw_height, &rects[ BUTTON_FOCUS ] );
+		}
+		else
+		{
+			// normal draw for idle/pressed
+			PIC_Set( item->pic, r, g, b, 255 );
+			PIC_DrawAdditive( item->generic.x, item->generic.y,
+				uiStatic.buttons_draw_width, uiStatic.buttons_draw_height, &rects[ state ] );
+		}
+
+		a = (768 - (uiStatic.realTime - item->generic.lastFocusTime)) >> 2;
 
 		if( state == BUTTON_NOFOCUS && a > 0 )
 		{	

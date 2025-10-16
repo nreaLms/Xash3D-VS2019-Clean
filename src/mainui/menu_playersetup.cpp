@@ -350,9 +350,10 @@ static void UI_PlayerSetup_Init( void )
 	uiPlayerSetup.background.generic.flags = QMF_INACTIVE;
 	uiPlayerSetup.background.generic.x = 0;
 	uiPlayerSetup.background.generic.y = 0;
-	uiPlayerSetup.background.generic.width = 1024;
-	uiPlayerSetup.background.generic.height = 768;
+	uiPlayerSetup.background.generic.width = ScreenWidth;
+	uiPlayerSetup.background.generic.height = ScreenHeight;
 	uiPlayerSetup.background.pic = ART_BACKGROUND;
+	uiPlayerSetup.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiPlayerSetup.banner.generic.id = ID_BANNER;
 	uiPlayerSetup.banner.generic.type = QMTYPE_BITMAP;

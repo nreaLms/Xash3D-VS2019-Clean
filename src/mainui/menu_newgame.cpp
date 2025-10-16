@@ -189,9 +189,10 @@ static void UI_NewGame_Init( void )
 	uiNewGame.background.generic.flags = QMF_INACTIVE;
 	uiNewGame.background.generic.x = 0;
 	uiNewGame.background.generic.y = 0;
-	uiNewGame.background.generic.width = 1024;
-	uiNewGame.background.generic.height = 768;
+	uiNewGame.background.generic.width = ScreenWidth;
+	uiNewGame.background.generic.height = ScreenHeight;
 	uiNewGame.background.pic = ART_BACKGROUND;
+	uiNewGame.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiNewGame.banner.generic.id = ID_BANNER;
 	uiNewGame.banner.generic.type = QMTYPE_BITMAP;

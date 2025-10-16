@@ -289,8 +289,8 @@ static void UI_InternetGames_Init( void )
 	uiInternetGames.background.generic.flags = QMF_INACTIVE;
 	uiInternetGames.background.generic.x = 0;
 	uiInternetGames.background.generic.y = 0;
-	uiInternetGames.background.generic.width = 1024;
-	uiInternetGames.background.generic.height = 768;
+	uiInternetGames.background.generic.width = ScreenWidth;
+	uiInternetGames.background.generic.height = ScreenHeight;
 	uiInternetGames.background.pic = ART_BACKGROUND;
 	uiInternetGames.background.generic.ownerdraw = UI_Background_Ownerdraw;
 

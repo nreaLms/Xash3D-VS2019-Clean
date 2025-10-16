@@ -313,9 +313,10 @@ static void UI_LoadGame_Init( void )
 	uiLoadGame.background.generic.flags = QMF_INACTIVE;
 	uiLoadGame.background.generic.x = 0;
 	uiLoadGame.background.generic.y = 0;
-	uiLoadGame.background.generic.width = 1024;
-	uiLoadGame.background.generic.height = 768;
+	uiLoadGame.background.generic.width = ScreenWidth;
+	uiLoadGame.background.generic.height = ScreenHeight;
 	uiLoadGame.background.pic = ART_BACKGROUND;
+	uiLoadGame.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
 	uiLoadGame.banner.generic.id = ID_BANNER;
 	uiLoadGame.banner.generic.type = QMTYPE_BITMAP;

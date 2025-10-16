@@ -289,8 +289,8 @@ static void UI_LanGame_Init( void )
 	uiLanGame.background.generic.flags = QMF_INACTIVE;
 	uiLanGame.background.generic.x = 0;
 	uiLanGame.background.generic.y = 0;
-	uiLanGame.background.generic.width = 1024;
-	uiLanGame.background.generic.height = 768;
+	uiLanGame.background.generic.width = ScreenWidth;
+	uiLanGame.background.generic.height = ScreenHeight;
 	uiLanGame.background.pic = ART_BACKGROUND;
 	uiLanGame.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
