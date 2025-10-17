@@ -196,7 +196,7 @@ static void UI_GameOptions_Init( void )
 	uiGameOptions.done.generic.id	= ID_DONE;
 	uiGameOptions.done.generic.type = QMTYPE_BM_BUTTON;
 	uiGameOptions.done.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW; 
-	uiGameOptions.done.generic.x = UI_SELECTION_POSX;
+	uiGameOptions.done.generic.x = UI_MAINSELECTION_POSX;
 	uiGameOptions.done.generic.y = 230;
 	uiGameOptions.done.generic.name = "Done";
 	uiGameOptions.done.generic.statusText = "Save changes and go back to the Customize Menu";
@@ -207,7 +207,7 @@ static void UI_GameOptions_Init( void )
 	uiGameOptions.cancel.generic.id = ID_CANCEL;
 	uiGameOptions.cancel.generic.type = QMTYPE_BM_BUTTON;
 	uiGameOptions.cancel.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW;
-	uiGameOptions.cancel.generic.x = UI_SELECTION_POSX;
+	uiGameOptions.cancel.generic.x = UI_MAINSELECTION_POSX;
 	uiGameOptions.cancel.generic.y = 280;
 	uiGameOptions.cancel.generic.name = "Cancel";
 	uiGameOptions.cancel.generic.statusText = "Go back to the Customize Menu";

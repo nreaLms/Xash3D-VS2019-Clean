@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ART_CLOSEBTN_N	"gfx/shell/cls_n"
 #define ART_CLOSEBTN_F	"gfx/shell/cls_f"
 #define ART_CLOSEBTN_D	"gfx/shell/cls_d"
+#define ART_MOD_LOGO	"gfx/shell/logotest"
+#define ART_MOD_LOGO2	"gfx/shell/logotest2"
 
 #define ID_BACKGROUND	0
 #define ID_CONSOLE		1
@@ -49,6 +51,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ID_MSGTEXT	 	14
 #define ID_YES	 	130
 #define ID_NO	 	131
+#define ID_LOGO	 	132
+#define ID_LOGO2	133
 
 typedef struct
 {
@@ -68,6 +72,8 @@ typedef struct
 
 	menuBitmap_s	minimizeBtn;
 	menuBitmap_s	quitButton;
+	menuBitmap_s	logo;
+	menuBitmap_s	logo2;
 
 	// quit dialog
 	menuAction_s	msgBox;
@@ -131,6 +137,84 @@ void UI_Background_Ownerdraw( void *self )
 	float logoPosY = 70 * scaleY; // original magic number
 
 	DRAW_LOGO( "logo.avi", logoPosX, logoPosY, logoWidth, logoHeight );
+}
+
+static bool soundPlayed1 = false;
+static bool soundPlayed2 = false;
+
+static void UI_Logo_Ownerdraw( void *self )
+{
+	menuBitmap_s *item = ( menuBitmap_s * ) self;
+
+	// --- Animation constants ---
+	const float initialScale = 0.25f;
+	const float animDuration = 0.15f;   // fast scale & fade
+	const float shakeDuration = 0.3f;
+	const float maxShake = 4.0f;
+	const float globalDelay = 0.25f;     // initial delay before first logo
+	const float staggerDelay = 0.50f;    // extra delay for second logo
+
+	// --- Determine per-logo delay based on ID ---
+	float logoDelay = 0.0f;
+	if ( item->generic.id == ID_LOGO2 )  // second logo
+		logoDelay = staggerDelay;
+
+	static float startTime = -1.0f;
+	if ( startTime < 0.0f )
+		startTime = gpGlobals->time;
+
+	float currentTime = gpGlobals->time;
+	float t = ( currentTime - startTime - globalDelay - logoDelay ) / animDuration;
+	if ( t < 0.0f ) t = 0.0f;
+	if ( t > 1.0f ) t = 1.0f;
+
+	// --- Scale & position ---
+	float scale = initialScale + ( 1.0f - initialScale ) * t;
+	int width = int( item->generic.width * scale );
+	int height = int( item->generic.height * scale );
+	int drawX = ( 1280 - width ) / 2;
+	int drawY = item->generic.y;
+
+	// --- Stronger midair bounce for the first logo ---
+	if ( item->generic.id == ID_LOGO )
+	{
+		// Simulate projectile-like rise and fall using a sharper sine wave
+		float bounceHeight = 60.0f; // much more noticeable lift
+		float bounceT = sinf( t * 3.14159f ); // smooth up/down curve
+		float gravityEffect = ( 1.0f - powf( t, 1.5f ) ); // stronger downward pull at end
+		drawY -= int( bounceHeight * bounceT * gravityEffect );
+	}
+
+	// --- Shake after scaling ---
+	if ( t >= 1.0f )
+	{
+		float shakeTime = currentTime - ( startTime + globalDelay + logoDelay + animDuration );
+		if ( shakeTime < shakeDuration )
+		{
+			float damping = 1.0f - shakeTime / shakeDuration;
+			drawX += int( sin( currentTime * 75.0f ) * maxShake * damping );
+			drawY += int( cos( currentTime * 75.0f ) * maxShake * damping );
+		}
+	}
+
+	// --- Play sounds ---
+	if ( t >= 0.2f && !soundPlayed1 && item->generic.id == ID_LOGO )
+	{
+		PLAY_SOUND( "title/woosh.wav" );
+		soundPlayed1 = true;
+	}
+
+	if ( t >= 0.45f && !soundPlayed2 && item->generic.id == ID_LOGO2 )
+	{
+		PLAY_SOUND( "title/woosh2.wav" );
+		soundPlayed2 = true;
+	}
+
+	// --- Fade ---
+	float alpha = t;
+	int color = ( ( int ) ( alpha * 255.0f ) << 24 ) | 0xFFFFFF;
+
+	UI_DrawPicAdditive( drawX, drawY, width, height, color, item->pic );
 }
 
 static void UI_QuitDialog( void )
@@ -573,6 +657,26 @@ static void UI_Main_Init( void )
 	
 	UI_UtilSetupPicButton( &uiMain.no, PC_CANCEL );
 
+	uiMain.logo.generic.id = ID_LOGO;
+	uiMain.logo.generic.type = QMTYPE_BITMAP;
+	uiMain.logo.generic.flags = QMF_INACTIVE|QMF_DRAW_ADDITIVE;
+	uiMain.logo.generic.ownerdraw = UI_Logo_Ownerdraw;
+	uiMain.logo.pic = ART_MOD_LOGO;
+	uiMain.logo.generic.width = int( 800 * 1.25f );   // 1000
+	uiMain.logo.generic.height = int( 86 * 1.25f );   // 107
+	uiMain.logo.generic.x = 0;
+	uiMain.logo.generic.y = 65;
+
+	uiMain.logo2.generic.id = ID_LOGO2;
+	uiMain.logo2.generic.type = QMTYPE_BITMAP;
+	uiMain.logo2.generic.flags = QMF_INACTIVE|QMF_DRAW_ADDITIVE;
+	uiMain.logo2.generic.ownerdraw = UI_Logo_Ownerdraw;
+	uiMain.logo2.pic = ART_MOD_LOGO2;
+	uiMain.logo2.generic.width = int( 800 * 0.85f );
+	uiMain.logo2.generic.height = int( 86 * 0.85f );
+	uiMain.logo2.generic.x = 0;
+	uiMain.logo2.generic.y = 150;
+
 	UI_AddItem( &uiMain.menu, (void *)&uiMain.background );
 
 	if ( gpGlobals->allow_console )
@@ -600,6 +704,8 @@ static void UI_Main_Init( void )
 	UI_AddItem( &uiMain.menu, (void *)&uiMain.dlgMessage1 );
 	UI_AddItem( &uiMain.menu, (void *)&uiMain.no );
 	UI_AddItem( &uiMain.menu, (void *)&uiMain.yes );
+	UI_AddItem( &uiMain.menu, (void *)&uiMain.logo );
+	UI_AddItem( &uiMain.menu, (void *)&uiMain.logo2 );
 }
 
 /*
@@ -616,6 +722,8 @@ void UI_Main_Precache( void )
 	PIC_Load( ART_CLOSEBTN_N );
 	PIC_Load( ART_CLOSEBTN_F );
 	PIC_Load( ART_CLOSEBTN_D );
+	PIC_Load( ART_MOD_LOGO );
+	PIC_Load( ART_MOD_LOGO2 );
 
 	// precache .avi file and get logo width and height
 	PRECACHE_LOGO( "logo.avi" );

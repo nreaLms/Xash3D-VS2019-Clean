@@ -297,7 +297,7 @@ static void UI_CreateGame_Init( void )
 	uiCreateGame.advOptions.generic.id = ID_ADVOPTIONS;
 	uiCreateGame.advOptions.generic.type = QMTYPE_BM_BUTTON;
 	uiCreateGame.advOptions.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW|QMF_GRAYED;
-	uiCreateGame.advOptions.generic.x = UI_SELECTION_POSX;
+	uiCreateGame.advOptions.generic.x = UI_MAINSELECTION_POSX;
 	uiCreateGame.advOptions.generic.y = 230;
 	uiCreateGame.advOptions.generic.name = "Adv. Options";
 	uiCreateGame.advOptions.generic.statusText = "Open the LAN game advanced options menu";
@@ -308,7 +308,7 @@ static void UI_CreateGame_Init( void )
 	uiCreateGame.done.generic.id = ID_DONE;
 	uiCreateGame.done.generic.type = QMTYPE_BM_BUTTON;
 	uiCreateGame.done.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW;
-	uiCreateGame.done.generic.x = UI_SELECTION_POSX;
+	uiCreateGame.done.generic.x = UI_MAINSELECTION_POSX;
 	uiCreateGame.done.generic.y = 280;
 	uiCreateGame.done.generic.name = "Ok";
 	uiCreateGame.done.generic.statusText = "Start the multiplayer game";
@@ -319,7 +319,7 @@ static void UI_CreateGame_Init( void )
 	uiCreateGame.cancel.generic.id = ID_CANCEL;
 	uiCreateGame.cancel.generic.type = QMTYPE_BM_BUTTON;
 	uiCreateGame.cancel.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW;
-	uiCreateGame.cancel.generic.x = UI_SELECTION_POSX;
+	uiCreateGame.cancel.generic.x = UI_MAINSELECTION_POSX;
 	uiCreateGame.cancel.generic.y = 330;
 	uiCreateGame.cancel.generic.name = "Cancel";
 	uiCreateGame.cancel.generic.statusText = "Return to LAN game menu";
@@ -331,7 +331,7 @@ static void UI_CreateGame_Init( void )
 	uiCreateGame.dedicatedServer.generic.type = QMTYPE_CHECKBOX;
 	uiCreateGame.dedicatedServer.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_ACT_ONRELEASE|QMF_MOUSEONLY|QMF_DROPSHADOW;
 	uiCreateGame.dedicatedServer.generic.name = "Dedicated server";
-	uiCreateGame.dedicatedServer.generic.x = UI_SELECTION_POSX;
+	uiCreateGame.dedicatedServer.generic.x = UI_MAINSELECTION_POSX;
 	uiCreateGame.dedicatedServer.generic.y = 685;
 	uiCreateGame.dedicatedServer.generic.callback = UI_CreateGame_Callback;
 	uiCreateGame.dedicatedServer.generic.statusText = "faster, but you can't join the server from this machine";

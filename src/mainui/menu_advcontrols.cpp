@@ -213,7 +213,7 @@ static void UI_AdvControls_Init( void )
 	uiAdvControls.done.generic.id	= ID_DONE;
 	uiAdvControls.done.generic.type = QMTYPE_BM_BUTTON;
 	uiAdvControls.done.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW; 
-	uiAdvControls.done.generic.x = UI_SELECTION_POSX;
+	uiAdvControls.done.generic.x = UI_MAINSELECTION_POSX;
 	uiAdvControls.done.generic.y = 680;
 	uiAdvControls.done.generic.name = "Done";
 	uiAdvControls.done.generic.statusText = "Save changes and go back to the Customize Menu";
@@ -224,7 +224,7 @@ static void UI_AdvControls_Init( void )
 	uiAdvControls.crosshair.generic.id = ID_CROSSHAIR;
 	uiAdvControls.crosshair.generic.type = QMTYPE_CHECKBOX;
 	uiAdvControls.crosshair.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_NOTIFY|QMF_ACT_ONRELEASE|QMF_MOUSEONLY|QMF_DROPSHADOW;
-	uiAdvControls.crosshair.generic.x = UI_SELECTION_POSX;
+	uiAdvControls.crosshair.generic.x = UI_MAINSELECTION_POSX;
 	uiAdvControls.crosshair.generic.y = 230;
 	uiAdvControls.crosshair.generic.name = "Crosshair";
 	uiAdvControls.crosshair.generic.callback = UI_AdvControls_Callback;
@@ -233,7 +233,7 @@ static void UI_AdvControls_Init( void )
 	uiAdvControls.invertMouse.generic.id = ID_INVERTMOUSE;
 	uiAdvControls.invertMouse.generic.type = QMTYPE_CHECKBOX;
 	uiAdvControls.invertMouse.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_NOTIFY|QMF_ACT_ONRELEASE|QMF_MOUSEONLY|QMF_DROPSHADOW;
-	uiAdvControls.invertMouse.generic.x = UI_SELECTION_POSX;
+	uiAdvControls.invertMouse.generic.x = UI_MAINSELECTION_POSX;
 	uiAdvControls.invertMouse.generic.y = 280;
 	uiAdvControls.invertMouse.generic.name = MenuStrings[HINT_REVERSE_MOUSE];
 	uiAdvControls.invertMouse.generic.callback = UI_AdvControls_Callback;
@@ -242,7 +242,7 @@ static void UI_AdvControls_Init( void )
 	uiAdvControls.mouseLook.generic.id = ID_MOUSELOOK;
 	uiAdvControls.mouseLook.generic.type = QMTYPE_CHECKBOX;
 	uiAdvControls.mouseLook.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_NOTIFY|QMF_ACT_ONRELEASE|QMF_MOUSEONLY|QMF_DROPSHADOW;
-	uiAdvControls.mouseLook.generic.x = UI_SELECTION_POSX;
+	uiAdvControls.mouseLook.generic.x = UI_MAINSELECTION_POSX;
 	uiAdvControls.mouseLook.generic.y = 330;
 	uiAdvControls.mouseLook.generic.name = "Mouse look";
 	uiAdvControls.mouseLook.generic.callback = UI_AdvControls_Callback;
@@ -251,7 +251,7 @@ static void UI_AdvControls_Init( void )
 	uiAdvControls.lookSpring.generic.id = ID_LOOKSPRING;
 	uiAdvControls.lookSpring.generic.type = QMTYPE_CHECKBOX;
 	uiAdvControls.lookSpring.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_NOTIFY|QMF_ACT_ONRELEASE|QMF_MOUSEONLY|QMF_DROPSHADOW;
-	uiAdvControls.lookSpring.generic.x = UI_SELECTION_POSX;
+	uiAdvControls.lookSpring.generic.x = UI_MAINSELECTION_POSX;
 	uiAdvControls.lookSpring.generic.y = 380;
 	uiAdvControls.lookSpring.generic.name = "Look spring";
 	uiAdvControls.lookSpring.generic.callback = UI_AdvControls_Callback;
@@ -260,7 +260,7 @@ static void UI_AdvControls_Init( void )
 	uiAdvControls.lookStrafe.generic.id = ID_LOOKSTRAFE;
 	uiAdvControls.lookStrafe.generic.type = QMTYPE_CHECKBOX;
 	uiAdvControls.lookStrafe.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_NOTIFY|QMF_ACT_ONRELEASE|QMF_MOUSEONLY|QMF_DROPSHADOW;
-	uiAdvControls.lookStrafe.generic.x = UI_SELECTION_POSX;
+	uiAdvControls.lookStrafe.generic.x = UI_MAINSELECTION_POSX;
 	uiAdvControls.lookStrafe.generic.y = 430;
 	uiAdvControls.lookStrafe.generic.name = "Look strafe";
 	uiAdvControls.lookStrafe.generic.callback = UI_AdvControls_Callback;
@@ -269,7 +269,7 @@ static void UI_AdvControls_Init( void )
 	uiAdvControls.mouseFilter.generic.id = ID_MOUSEFILTER;
 	uiAdvControls.mouseFilter.generic.type = QMTYPE_CHECKBOX;
 	uiAdvControls.mouseFilter.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_NOTIFY|QMF_ACT_ONRELEASE|QMF_MOUSEONLY|QMF_DROPSHADOW;
-	uiAdvControls.mouseFilter.generic.x = UI_SELECTION_POSX;
+	uiAdvControls.mouseFilter.generic.x = UI_MAINSELECTION_POSX;
 	uiAdvControls.mouseFilter.generic.y = 480;
 	uiAdvControls.mouseFilter.generic.name = "Mouse filter";
 	uiAdvControls.mouseFilter.generic.callback = UI_AdvControls_Callback;
@@ -278,7 +278,7 @@ static void UI_AdvControls_Init( void )
 	uiAdvControls.autoaim.generic.id = ID_AUTOAIM;
 	uiAdvControls.autoaim.generic.type = QMTYPE_CHECKBOX;
 	uiAdvControls.autoaim.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_NOTIFY|QMF_ACT_ONRELEASE|QMF_MOUSEONLY|QMF_DROPSHADOW;
-	uiAdvControls.autoaim.generic.x = UI_SELECTION_POSX;
+	uiAdvControls.autoaim.generic.x = UI_MAINSELECTION_POSX;
 	uiAdvControls.autoaim.generic.y = 530;
 	uiAdvControls.autoaim.generic.name = "Autoaim";
 	uiAdvControls.autoaim.generic.callback = UI_AdvControls_Callback;
@@ -288,7 +288,7 @@ static void UI_AdvControls_Init( void )
 	uiAdvControls.sensitivity.generic.type = QMTYPE_SLIDER;
 	uiAdvControls.sensitivity.generic.flags = QMF_PULSEIFFOCUS|QMF_DROPSHADOW;
 	uiAdvControls.sensitivity.generic.name = MenuStrings[HINT_MOUSE_SENSE];
-	uiAdvControls.sensitivity.generic.x = UI_SELECTION_POSX;
+	uiAdvControls.sensitivity.generic.x = UI_MAINSELECTION_POSX;
 	uiAdvControls.sensitivity.generic.y = 625;
 	uiAdvControls.sensitivity.generic.callback = UI_AdvControls_Callback;
 	uiAdvControls.sensitivity.generic.statusText = "Set in-game mouse sensitivity";

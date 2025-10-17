@@ -107,7 +107,7 @@ static void UI_Video_Init( void )
 	uiVideo.vidOptions.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW|QMF_NOTIFY;
 	uiVideo.vidOptions.generic.name = "Video options";
 	uiVideo.vidOptions.generic.statusText = "Set video options such as screen size, gamma and image quality.";
-	uiVideo.vidOptions.generic.x = UI_SELECTION_POSX;
+	uiVideo.vidOptions.generic.x = UI_MAINSELECTION_POSX;
 	uiVideo.vidOptions.generic.y = 230;
 	uiVideo.vidOptions.generic.callback = UI_Video_Callback;
 
@@ -118,7 +118,7 @@ static void UI_Video_Init( void )
 	uiVideo.vidModes.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW|QMF_NOTIFY;
 	uiVideo.vidModes.generic.name = "Video modes";
 	uiVideo.vidModes.generic.statusText = "Set video modes and configure 3D accelerators.";
-	uiVideo.vidModes.generic.x = UI_SELECTION_POSX;
+	uiVideo.vidModes.generic.x = UI_MAINSELECTION_POSX;
 	uiVideo.vidModes.generic.y = 280;
 	uiVideo.vidModes.generic.callback = UI_Video_Callback;
 
@@ -129,7 +129,7 @@ static void UI_Video_Init( void )
 	uiVideo.done.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW|QMF_NOTIFY;
 	uiVideo.done.generic.name = "Done";
 	uiVideo.done.generic.statusText = "Go back to the previous menu";
-	uiVideo.done.generic.x = UI_SELECTION_POSX;
+	uiVideo.done.generic.x = UI_MAINSELECTION_POSX;
 	uiVideo.done.generic.y = 330;
 	uiVideo.done.generic.callback = UI_Video_Callback;
 

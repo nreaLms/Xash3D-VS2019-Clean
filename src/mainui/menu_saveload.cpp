@@ -118,7 +118,7 @@ static void UI_SaveLoad_Init( void )
 	uiSaveLoad.load.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW|QMF_NOTIFY;
 	uiSaveLoad.load.generic.name = "Load game";
 	uiSaveLoad.load.generic.statusText = "Load a previously saved game";
-	uiSaveLoad.load.generic.x = UI_SELECTION_POSX;
+	uiSaveLoad.load.generic.x = UI_MAINSELECTION_POSX;
 	uiSaveLoad.load.generic.y = 230;
 	uiSaveLoad.load.generic.callback = UI_SaveLoad_Callback;
 
@@ -129,7 +129,7 @@ static void UI_SaveLoad_Init( void )
 	uiSaveLoad.save.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW|QMF_NOTIFY;
 	uiSaveLoad.save.generic.name = "Save game";
 	uiSaveLoad.save.generic.statusText = "Save current game";
-	uiSaveLoad.save.generic.x = UI_SELECTION_POSX;
+	uiSaveLoad.save.generic.x = UI_MAINSELECTION_POSX;
 	uiSaveLoad.save.generic.y = 280;
 	uiSaveLoad.save.generic.callback = UI_SaveLoad_Callback;
 
@@ -140,7 +140,7 @@ static void UI_SaveLoad_Init( void )
 	uiSaveLoad.done.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW|QMF_NOTIFY;
 	uiSaveLoad.done.generic.name = "Done";
 	uiSaveLoad.done.generic.statusText = "Go back to the Main Menu";
-	uiSaveLoad.done.generic.x = UI_SELECTION_POSX;
+	uiSaveLoad.done.generic.x = UI_MAINSELECTION_POSX;
 	uiSaveLoad.done.generic.y = 330;
 	uiSaveLoad.done.generic.callback = UI_SaveLoad_Callback;
 

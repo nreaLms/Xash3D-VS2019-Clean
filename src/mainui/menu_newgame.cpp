@@ -208,7 +208,7 @@ static void UI_NewGame_Init( void )
 	uiNewGame.easy.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW|QMF_NOTIFY;
 	uiNewGame.easy.generic.name = "Easy";
 	uiNewGame.easy.generic.statusText = MenuStrings[HINT_SKILL_EASY];
-	uiNewGame.easy.generic.x = UI_SELECTION_POSX;
+	uiNewGame.easy.generic.x = UI_MAINSELECTION_POSX;
 	uiNewGame.easy.generic.y = 230;
 	uiNewGame.easy.generic.callback = UI_NewGame_Callback;
 
@@ -219,7 +219,7 @@ static void UI_NewGame_Init( void )
 	uiNewGame.medium.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW|QMF_NOTIFY;
 	uiNewGame.medium.generic.name = "Medium";
 	uiNewGame.medium.generic.statusText = MenuStrings[HINT_SKILL_NORMAL];
-	uiNewGame.medium.generic.x = UI_SELECTION_POSX;
+	uiNewGame.medium.generic.x = UI_MAINSELECTION_POSX;
 	uiNewGame.medium.generic.y = 280;
 	uiNewGame.medium.generic.callback = UI_NewGame_Callback;
 	
@@ -230,7 +230,7 @@ static void UI_NewGame_Init( void )
 	uiNewGame.hard.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW|QMF_NOTIFY;
 	uiNewGame.hard.generic.name = "Difficult";
 	uiNewGame.hard.generic.statusText = MenuStrings[HINT_SKILL_HARD];
-	uiNewGame.hard.generic.x = UI_SELECTION_POSX;
+	uiNewGame.hard.generic.x = UI_MAINSELECTION_POSX;
 	uiNewGame.hard.generic.y = 330;
 	uiNewGame.hard.generic.callback = UI_NewGame_Callback;
 
@@ -241,7 +241,7 @@ static void UI_NewGame_Init( void )
 	uiNewGame.cancel.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW|QMF_NOTIFY;
 	uiNewGame.cancel.generic.name = "Cancel";
 	uiNewGame.cancel.generic.statusText = "Go back to the main Menu";
-	uiNewGame.cancel.generic.x = UI_SELECTION_POSX;
+	uiNewGame.cancel.generic.x = UI_MAINSELECTION_POSX;
 	uiNewGame.cancel.generic.y = 380;
 	uiNewGame.cancel.generic.callback = UI_NewGame_Callback;
 

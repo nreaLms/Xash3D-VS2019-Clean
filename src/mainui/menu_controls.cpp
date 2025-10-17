@@ -473,7 +473,7 @@ static void UI_Controls_Init( void )
 	uiControls.defaults.generic.id = ID_DEFAULTS;
 	uiControls.defaults.generic.type = QMTYPE_BM_BUTTON;
 	uiControls.defaults.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW;
-	uiControls.defaults.generic.x = UI_SELECTION_POSX;
+	uiControls.defaults.generic.x = UI_MAINSELECTION_POSX;
 	uiControls.defaults.generic.y = 230;
 	uiControls.defaults.generic.name = "Use defaults";
 	uiControls.defaults.generic.statusText = "Reset all buttons binding to their default values";
@@ -484,7 +484,7 @@ static void UI_Controls_Init( void )
 	uiControls.advanced.generic.id = ID_ADVANCED;
 	uiControls.advanced.generic.type = QMTYPE_BM_BUTTON;
 	uiControls.advanced.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW;
-	uiControls.advanced.generic.x = UI_SELECTION_POSX;
+	uiControls.advanced.generic.x = UI_MAINSELECTION_POSX;
 	uiControls.advanced.generic.y = 280;
 	uiControls.advanced.generic.name = "Adv controls";
 	uiControls.advanced.generic.statusText = "Change mouse sensitivity, enable autoaim, mouselook and crosshair";
@@ -495,7 +495,7 @@ static void UI_Controls_Init( void )
 	uiControls.done.generic.id = ID_DONE;
 	uiControls.done.generic.type = QMTYPE_BM_BUTTON;
 	uiControls.done.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW;
-	uiControls.done.generic.x = UI_SELECTION_POSX;
+	uiControls.done.generic.x = UI_MAINSELECTION_POSX;
 	uiControls.done.generic.y = 330;
 	uiControls.done.generic.name = "Ok";
 	uiControls.done.generic.statusText = "Save changes and return to configuration menu";
@@ -506,7 +506,7 @@ static void UI_Controls_Init( void )
 	uiControls.cancel.generic.id = ID_CANCEL;
 	uiControls.cancel.generic.type = QMTYPE_BM_BUTTON;
 	uiControls.cancel.generic.flags = QMF_HIGHLIGHTIFFOCUS|QMF_DROPSHADOW;
-	uiControls.cancel.generic.x = UI_SELECTION_POSX;
+	uiControls.cancel.generic.x = UI_MAINSELECTION_POSX;
 	uiControls.cancel.generic.y = 380;
 	uiControls.cancel.generic.name = "Cancel";
 	uiControls.cancel.generic.statusText = "Discard changes and return to configuration menu";
