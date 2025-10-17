@@ -1048,6 +1048,9 @@ void UI_PopMenu( void )
 UI_UpdateMenu
 =================
 */
+// Define global animation constants
+#define UI_MUSIC_START_DELAY 0.40f        // seconds after animation start to play music
+
 void UI_UpdateMenu( float flTime )
 {
 	if( !uiStatic.initialized )
@@ -1067,33 +1070,27 @@ void UI_UpdateMenu( float flTime )
 	if( CVAR_GET_FLOAT( "cl_background" ) && !g_engfuncs.pfnClientInGame())
 		return;	// don't draw menu while level is loading
 
-	if( uiStatic.firstDraw )
+	static bool firstDrawDone = false;
+	static bool musicStarted = false;
+	static float animationStartTime = -1.0f;
+
+	if ( !firstDrawDone )
 	{
-		// we loading background so skip SCR_Update
-		if( UI_StartBackGroundMap( )) return;
+		// record the animation start time
+		if ( animationStartTime < 0.0f )
+			animationStartTime = gpGlobals->time;
 
 		if( uiStatic.menuActive->activateFunc )
 			uiStatic.menuActive->activateFunc();
+
+		firstDrawDone = true;
 	}
 
 	// draw menu
 	if( uiStatic.menuActive->drawFunc )
 		uiStatic.menuActive->drawFunc();
-	else UI_DrawMenu( uiStatic.menuActive );
-
-	if( uiStatic.firstDraw )
-	{
-		uiStatic.firstDraw = false;
-		static int first = TRUE;
-                    
-		if( first )
-		{
-			// if game was launched with commandline e.g. +map or +load ignore the music
-			if( !CL_IsActive( ))
-				BACKGROUND_TRACK( "gamestartup", "gamestartup" );
-			first = FALSE;
-		}
-	}
+	else
+		UI_DrawMenu( uiStatic.menuActive );
 
 	//CR
 	UI_DrawTitleAnim();
@@ -1102,13 +1099,17 @@ void UI_UpdateMenu( float flTime )
 	// draw cursor
 	UI_DrawMouseCursor();
 
-	// delay playing the enter sound until after the menu has been
-	// drawn, to avoid delay while caching images
-	/*if( uiStatic.enterSound > 0.0f && uiStatic.enterSound <= gpGlobals->time )
+	// --- Start music at the right moment ---
+	float currentTime = gpGlobals->time;
+
+	if ( !musicStarted && currentTime >= animationStartTime + UI_MUSIC_START_DELAY )
 	{
-		UI_StartSound( uiSoundIn );
-		uiStatic.enterSound = -1;
-	}*/
+		// start background music
+		if ( !CL_IsActive() ) // only start if not already in a level
+			BACKGROUND_TRACK( "gamestartup", "gamestartup" );
+
+		musicStarted = true;
+	}
 }
 
 /*

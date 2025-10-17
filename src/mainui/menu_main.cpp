@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ART_CLOSEBTN_D	"gfx/shell/cls_d"
 #define ART_MOD_LOGO	"gfx/shell/logotest"
 #define ART_MOD_LOGO2	"gfx/shell/logotest2"
+#define ART_MOD_BLACKBG	"gfx/shell/splash_black"
 
 #define ID_BACKGROUND	0
 #define ID_CONSOLE		1
@@ -53,12 +54,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ID_NO	 	131
 #define ID_LOGO	 	132
 #define ID_LOGO2	133
+#define ID_BACKGROUND_BLACK	134
 
 typedef struct
 {
 	menuFramework_s	menu;
 
 	menuBitmap_s	background;
+	menuBitmap_s	backgroundblack;
 	menuPicButton_s	console;
 	menuPicButton_s	resumeGame;
 	menuPicButton_s	newGame;
@@ -142,6 +145,26 @@ void UI_Background_Ownerdraw( void *self )
 static bool soundPlayed1 = false;
 static bool soundPlayed2 = false;
 
+#define UI_ANIMATION_START_DELAY 0.50f  // seconds to wait before anything starts
+
+static void UI_BlackBG_Ownerdraw( void *self )
+{
+	static float startTime = -1.0f;
+	if ( startTime < 0.0f )
+		startTime = gpGlobals->time;
+
+	float currentTime = gpGlobals->time;
+
+	const float bgFadeDelay = UI_ANIMATION_START_DELAY + 2.0f;  // relative to start
+	const float backgroundFadeTime = 0.50f; // fade duration
+
+	float t = ( currentTime - startTime - bgFadeDelay ) / backgroundFadeTime;
+	if ( t < 0.0f ) t = 0.0f;
+	if ( t > 1.0f ) t = 1.0f;
+
+	FillRGBA( 0, 0, 1280, 720, 0, 0, 0, ( int ) ( ( 1.0f - t ) * 255.0f ) );
+}
+
 static void UI_Logo_Ownerdraw( void *self )
 {
 	menuBitmap_s *item = ( menuBitmap_s * ) self;
@@ -151,19 +174,22 @@ static void UI_Logo_Ownerdraw( void *self )
 	const float animDuration = 0.15f;   // fast scale & fade
 	const float shakeDuration = 0.3f;
 	const float maxShake = 4.0f;
-	const float globalDelay = 0.25f;     // initial delay before first logo
 	const float staggerDelay = 0.50f;    // extra delay for second logo
-
-	// --- Determine per-logo delay based on ID ---
-	float logoDelay = 0.0f;
-	if ( item->generic.id == ID_LOGO2 )  // second logo
-		logoDelay = staggerDelay;
+	const float globalDelay = UI_ANIMATION_START_DELAY;
+	const float logoUpDelay = 1.25f;
+	const float upwardDuration = 0.40f;
+	const float upwardOffset = 235.0f;
+	const float logoSpacing = 35.0f;     // space between logos
 
 	static float startTime = -1.0f;
 	if ( startTime < 0.0f )
 		startTime = gpGlobals->time;
 
 	float currentTime = gpGlobals->time;
+
+	// --- Determine per-logo delay ---
+	float logoDelay = ( item->generic.id == ID_LOGO2 ) ? staggerDelay : 0.0f;
+
 	float t = ( currentTime - startTime - globalDelay - logoDelay ) / animDuration;
 	if ( t < 0.0f ) t = 0.0f;
 	if ( t > 1.0f ) t = 1.0f;
@@ -174,6 +200,10 @@ static void UI_Logo_Ownerdraw( void *self )
 	int height = int( item->generic.height * scale );
 	int drawX = ( 1280 - width ) / 2;
 	int drawY = item->generic.y;
+	if ( item->generic.id == ID_LOGO2 )
+	{
+		drawY = uiMain.logo.generic.y + int( uiMain.logo.generic.height * 1.25f ) - int( logoSpacing ); // below logo1
+	}
 
 	// --- Stronger midair bounce for the first logo ---
 	if ( item->generic.id == ID_LOGO )
@@ -210,7 +240,17 @@ static void UI_Logo_Ownerdraw( void *self )
 		soundPlayed2 = true;
 	}
 
-	// --- Fade ---
+	// --- Upward movement with cubic ease-out ---
+	float upwardStartTime = startTime + globalDelay + staggerDelay + logoUpDelay;
+	float upT = ( currentTime - upwardStartTime ) / upwardDuration;
+	if ( upT > 1.0f ) upT = 1.0f;
+	if ( upT > 0.0f )
+	{
+		float easeT = 1.0f - powf( 1.0f - upT, 3 ); // cubic ease-out
+		drawY -= int( upwardOffset * easeT );
+	}
+
+	// --- Fade logos ---
 	float alpha = t;
 	int color = ( ( int ) ( alpha * 255.0f ) << 24 ) | 0xFFFFFF;
 
@@ -444,6 +484,15 @@ static void UI_Main_Init( void )
 	uiMain.background.pic = ART_BACKGROUND;
 	uiMain.background.generic.ownerdraw = UI_Background_Ownerdraw;
 
+	uiMain.backgroundblack.generic.id = ID_BACKGROUND_BLACK;
+	uiMain.backgroundblack.generic.type = QMTYPE_ACTION;
+	uiMain.backgroundblack.generic.flags = QMF_INACTIVE;
+	uiMain.backgroundblack.generic.x = 0;
+	uiMain.backgroundblack.generic.y = 0;
+	uiMain.backgroundblack.generic.width = ScreenWidth;
+	uiMain.backgroundblack.generic.height = ScreenHeight;
+	uiMain.backgroundblack.generic.ownerdraw = UI_BlackBG_Ownerdraw;
+
 	uiMain.console.generic.id = ID_CONSOLE;
 	uiMain.console.generic.type = QMTYPE_BM_BUTTON;
 	uiMain.console.generic.name = "Console";
@@ -662,20 +711,20 @@ static void UI_Main_Init( void )
 	uiMain.logo.generic.flags = QMF_INACTIVE|QMF_DRAW_ADDITIVE;
 	uiMain.logo.generic.ownerdraw = UI_Logo_Ownerdraw;
 	uiMain.logo.pic = ART_MOD_LOGO;
-	uiMain.logo.generic.width = int( 800 * 1.25f );   // 1000
-	uiMain.logo.generic.height = int( 86 * 1.25f );   // 107
+	uiMain.logo.generic.width = int( 800 * 1.15f );
+	uiMain.logo.generic.height = int( 86 * 1.15f );
 	uiMain.logo.generic.x = 0;
-	uiMain.logo.generic.y = 65;
+	uiMain.logo.generic.y = 720 / 2 - int( uiMain.logo.generic.height / 2 );   // center vertically
 
 	uiMain.logo2.generic.id = ID_LOGO2;
 	uiMain.logo2.generic.type = QMTYPE_BITMAP;
 	uiMain.logo2.generic.flags = QMF_INACTIVE|QMF_DRAW_ADDITIVE;
 	uiMain.logo2.generic.ownerdraw = UI_Logo_Ownerdraw;
 	uiMain.logo2.pic = ART_MOD_LOGO2;
-	uiMain.logo2.generic.width = int( 800 * 0.85f );
-	uiMain.logo2.generic.height = int( 86 * 0.85f );
+	uiMain.logo2.generic.width = int( 800 * 0.90f );
+	uiMain.logo2.generic.height = int( 86 * 0.90f );
 	uiMain.logo2.generic.x = 0;
-	uiMain.logo2.generic.y = 150;
+	uiMain.logo2.generic.y = 720 / 2 - int( uiMain.logo2.generic.height / 2 );  // center vertically
 
 	UI_AddItem( &uiMain.menu, (void *)&uiMain.background );
 
@@ -704,6 +753,7 @@ static void UI_Main_Init( void )
 	UI_AddItem( &uiMain.menu, (void *)&uiMain.dlgMessage1 );
 	UI_AddItem( &uiMain.menu, (void *)&uiMain.no );
 	UI_AddItem( &uiMain.menu, (void *)&uiMain.yes );
+	UI_AddItem( &uiMain.menu, (void *)&uiMain.backgroundblack );
 	UI_AddItem( &uiMain.menu, (void *)&uiMain.logo );
 	UI_AddItem( &uiMain.menu, (void *)&uiMain.logo2 );
 }
