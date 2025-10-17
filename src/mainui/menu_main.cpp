@@ -162,7 +162,8 @@ static void UI_BlackBG_Ownerdraw( void *self )
 	if ( t < 0.0f ) t = 0.0f;
 	if ( t > 1.0f ) t = 1.0f;
 
-	FillRGBA( 0, 0, 1280, 720, 0, 0, 0, ( int ) ( ( 1.0f - t ) * 255.0f ) );
+	// Use actual screen size
+	FillRGBA( 0, 0, ScreenWidth, ScreenHeight, 0, 0, 0, ( int ) ( ( 1.0f - t ) * 255.0f ) );
 }
 
 static void UI_Logo_Ownerdraw( void *self )
@@ -178,14 +179,17 @@ static void UI_Logo_Ownerdraw( void *self )
 	const float globalDelay = UI_ANIMATION_START_DELAY;
 	const float logoUpDelay = 1.25f;
 	const float upwardDuration = 0.40f;
-	const float upwardOffset = 235.0f;
-	const float logoSpacing = 35.0f;     // space between logos
+	const float baseUpwardOffset = 235.0f; // offset at 720p
+	const float logoSpacing = 35.0f;       // space between logos
 
 	static float startTime = -1.0f;
 	if ( startTime < 0.0f )
 		startTime = gpGlobals->time;
 
 	float currentTime = gpGlobals->time;
+
+	// --- Scale upward offset to screen resolution ---
+	float upwardOffset = baseUpwardOffset * ( ScreenHeight / 720.0f );
 
 	// --- Determine per-logo delay ---
 	float logoDelay = ( item->generic.id == ID_LOGO2 ) ? staggerDelay : 0.0f;
@@ -198,7 +202,10 @@ static void UI_Logo_Ownerdraw( void *self )
 	float scale = initialScale + ( 1.0f - initialScale ) * t;
 	int width = int( item->generic.width * scale );
 	int height = int( item->generic.height * scale );
-	int drawX = ( 1280 - width ) / 2;
+
+	// Center X on any resolution
+	int drawX = ( ScreenWidth - width ) / 2;
+
 	int drawY = item->generic.y;
 	if ( item->generic.id == ID_LOGO2 )
 	{
@@ -208,10 +215,9 @@ static void UI_Logo_Ownerdraw( void *self )
 	// --- Stronger midair bounce for the first logo ---
 	if ( item->generic.id == ID_LOGO )
 	{
-		// Simulate projectile-like rise and fall using a sharper sine wave
-		float bounceHeight = 60.0f; // much more noticeable lift
-		float bounceT = sinf( t * 3.14159f ); // smooth up/down curve
-		float gravityEffect = ( 1.0f - powf( t, 1.5f ) ); // stronger downward pull at end
+		float bounceHeight = 60.0f;
+		float bounceT = sinf( t * 3.14159f );
+		float gravityEffect = ( 1.0f - powf( t, 1.5f ) );
 		drawY -= int( bounceHeight * bounceT * gravityEffect );
 	}
 
@@ -713,7 +719,7 @@ static void UI_Main_Init( void )
 	uiMain.logo.pic = ART_MOD_LOGO;
 	uiMain.logo.generic.width = int( 800 * 1.15f );
 	uiMain.logo.generic.height = int( 86 * 1.15f );
-	uiMain.logo.generic.x = 0;
+	uiMain.logo.generic.x = ( ScreenWidth - uiMain.logo.generic.width ) / 2;
 	uiMain.logo.generic.y = 720 / 2 - int( uiMain.logo.generic.height / 2 );   // center vertically
 
 	uiMain.logo2.generic.id = ID_LOGO2;
@@ -723,7 +729,7 @@ static void UI_Main_Init( void )
 	uiMain.logo2.pic = ART_MOD_LOGO2;
 	uiMain.logo2.generic.width = int( 800 * 0.90f );
 	uiMain.logo2.generic.height = int( 86 * 0.90f );
-	uiMain.logo2.generic.x = 0;
+	uiMain.logo2.generic.x = ( ScreenWidth - uiMain.logo2.generic.width ) / 2;
 	uiMain.logo2.generic.y = 720 / 2 - int( uiMain.logo2.generic.height / 2 );  // center vertically
 
 	UI_AddItem( &uiMain.menu, (void *)&uiMain.background );
